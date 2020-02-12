@@ -93,21 +93,26 @@ def main(username, password):
 if __name__=="__main__":
     if os.path.exists('./config.json'):
         configs = json.loads(open('./config.json', 'r').read())
-        username = configs["username"]
-        password = configs["password"]
-        hour = configs["schedule"]["hour"]
-        minute = configs["schedule"]["minute"]
+        usernames = [i["username"] for i in configs["users"]]
+        passwords = [i["password"] for i in configs["users"]]
+        hours = [i["schedule"]["hour"] for i in configs["users"]]
+        minutes = [i["schedule"]["minute"] for i in configs["users"]]
     else:
-        username = input("👤 浙大统一认证用户名: ")
-        password = getpass.getpass('🔑 浙大统一认证密码: ')
-        print("⏲  请输入定时时间（默认每天6:05）")
-        hour = input("\thour: ") or 6
-        minute = input("\tminute: ") or 5
+        usernames,passwords,hours,minutes = [],[],[],[]
+        for i in int(input("👤 总共想帮几位用户打卡: ")):
+            usernames.append(input("👤 浙大统一认证用户名: "))
+            password = getpass.getpass('🔑 浙大统一认证密码: ')
+            print("⏲  请输入定时时间（默认每天6:05）")
+            hour = input("\thour: ") or 6
+            hours.append(hour)
+            minute = input("\tminute: ") or 5
+            minutes.append(minute)
 
     # Schedule task
     scheduler = BlockingScheduler()
-    scheduler.add_job(main, 'cron', args=[username, password], hour=hour, minute=minute)
-    print('⏰ 已启动定时程序，每天 %02d:%02d 为您打卡' %(int(hour), int(minute)))
+    for username,password,hour,minute in zip(usernames,passwords,hours,minutes):
+        scheduler.add_job(main, 'cron', args=[username, password], hour=hour, minute=minute)
+        print('⏰ 已启动定时程序，每天 %02d:%02d 为 %s 打卡' %(int(hour), int(minute),username))
     print('Press Ctrl+{0} to exit'.format('Break' if os.name == 'nt' else 'C'))
 
     try:
