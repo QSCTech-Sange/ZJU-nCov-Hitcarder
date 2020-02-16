@@ -20,10 +20,10 @@ class DaKa(object):
         execution = re.search('name="execution" value="(.*?)"', res.text).group(1)
         res = self.sess.get(url='https://zjuam.zju.edu.cn/cas/v2/getPubKey').json()
         n, e = res['modulus'], res['exponent']
-        encrypt_password = self._rsa_encrypt(password, e, n)
+        encrypt_password = self._rsa_encrypt(self.password, e, n)
 
         data = {
-            'username': username,
+            'username': self.username,
             'password': encrypt_password,
             'execution': execution,
             '_eventId': 'submit'
@@ -55,6 +55,8 @@ class DaKa(object):
         new_info['number'] = number
         new_info["date"] = self.get_date()
         new_info["created"] = round(time.time())
+        new_info['jrdqtlqk[]'] = 0
+        new_info['jrdqjcqk[]'] = 0
         self.info = new_info
         return new_info
 
@@ -102,6 +104,7 @@ if __name__=="__main__":
         for i in range(int(input("👤 总共想帮几位用户打卡: "))):
             usernames.append(input("👤 浙大统一认证用户名: "))
             password = getpass.getpass('🔑 浙大统一认证密码: ')
+            passwords.append(password)
             print("⏲  请输入定时时间（默认每天6:05）")
             hour = input("\thour: ") or 6
             hours.append(hour)
