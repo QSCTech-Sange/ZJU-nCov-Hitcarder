@@ -99,7 +99,7 @@ if __name__=="__main__":
         minutes = [i["schedule"]["minute"] for i in configs["users"]]
     else:
         usernames,passwords,hours,minutes = [],[],[],[]
-        for i in int(input("👤 总共想帮几位用户打卡: ")):
+        for i in range(int(input("👤 总共想帮几位用户打卡: "))):
             usernames.append(input("👤 浙大统一认证用户名: "))
             password = getpass.getpass('🔑 浙大统一认证密码: ')
             print("⏲  请输入定时时间（默认每天6:05）")
