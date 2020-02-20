@@ -55,6 +55,7 @@ class DaKa(object):
         new_info['number'] = number
         new_info["date"] = self.get_date()
         new_info["created"] = round(time.time())
+        # form change
         new_info['jrdqtlqk[]'] = 0
         new_info['jrdqjcqk[]'] = 0
         self.info = new_info
