@@ -9,9 +9,9 @@
 
 <img src="https://github.com/Tishacy/ZJU-nCov-Hitcarder/raw/master/demo.png" width="500px"/>
 
-> 感谢[conv1d](https://github.com/conv1d)同学，已使用 requests 直接登录浙大统一认证平台，不再依赖phantomjs
+> 感谢[conv1d](https://github.com/conv1d)同学，已使用 requests 直接登录浙大统一认证平台，不再依赖 phantomjs
 >
-> ~~增加了各操作系统的phantomjs和自动选driver的功能，结果导致库变得较大，如果想自行下载对应版本的phantomjs，可以切换到`neat`分支（只保留了windows系统的phantomjs）下载本项目。~~
+> ~~增加了各操作系统的 phantomjs 和自动选 driver 的功能，结果导致库变得较大，如果想自行下载对应版本的 phantomjs，可以切换到`neat`分支（只保留了 windows 系统的 phantomjs）下载本项目。~~
 
 ## Usage
 
@@ -56,6 +56,7 @@
 ## Tips
 
 - 为了防止电脑休眠或关机时程序不运行，推荐把这个部署到 VPS 上
+- 可以使用指令 `python3 daka.py&`　使其在后台运行。在根目录下会生成 `log.txt` 便于查看打卡状态。
 - 测试程序是否正常运行：可以先把定的时间放在最近的一个时间（比如下一分钟）看下到时间是否可以正常打卡
 
 
