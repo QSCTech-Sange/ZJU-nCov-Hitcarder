@@ -49,15 +49,16 @@
 4. 启动定时自动打卡脚本
 
    ```bash
-   $ python3 daka.py
+   $ python3 main.py
    ```
 
 
 ## Tips
 
-- 为了防止电脑休眠或关机时程序不运行，推荐把这个部署到 VPS 上
-- 可以使用指令 `python3 daka.py&`　使其在后台运行。在根目录下会生成 `log.txt` 便于查看打卡状态。
-- 测试程序是否正常运行：可以先把定的时间放在最近的一个时间（比如下一分钟）看下到时间是否可以正常打卡
+- 第一次打卡需要人工打卡。
+- 为了防止电脑休眠或关机时程序不运行，推荐把这个部署到 VPS 上。
+- 可以使用指令 `python3 main.py&`　使其在后台运行。在根目录下会生成 `log.txt` 便于查看打卡状态。
+- 测试程序是否正常运行：可以先把定的时间放在最近的一个时间（比如下一分钟）看下到时间是否可以正常打卡。
 
 
 ## Thanks
@@ -72,6 +73,3 @@
 Copyright (c) 2020 tishacy.
 
 Licensed under the [MIT License](https://github.com/Tishacy/ZJU-nCov-Hitcarder/blob/master/LICENSE)
-
-
-
