@@ -27,7 +27,7 @@
     $ pip3 install -r requirements.txt
     ```
 
-3. 将 config.json.templ 模板文件重命名为 config.json 文件，并修改 config.json 中的配置。如果需要更多用户的话可以继续添加。请注意，用户与用户之间的大括号之间应该留有**空格**，而结尾不应该留有空格。如果只需要给一个人打开，可以删除第二个用户。
+3. 将 config.json.templ 模板文件重命名为 config.json 文件，并修改 config.json 中的配置。如果需要更多用户的话可以继续添加。请注意，用户与用户之间的大括号之间应该留有**逗号**，而结尾不应该留有逗号。如果只需要给一个人打开，可以删除第二个用户。
   
     ```javascript
     {   "username":"你的浙大统一认证平台用户名" , 
