@@ -3,6 +3,15 @@ import requests, json, re
 import time, datetime, os, sys
 
 class DaKa(object):
+    """Hit card class
+    Attributes:
+        username: (str) 浙大统一认证平台用户名（一般为学号）
+        password: (str) 浙大统一认证平台密码
+        login_url: (str) 登录url
+        base_url: (str) 打卡首页url
+        save_url: (str) 提交打卡url
+        sess: (requests.Session) 统一的session
+    """
     def __init__(self, username, password):
         self.username = username
         self.password = password
@@ -26,6 +35,10 @@ class DaKa(object):
             '_eventId': 'submit'
         }
         res = self.sess.post(url=self.login_url, data=data)
+
+        # check if login successfully
+        if '统一身份认证' in res.content.decode():
+            raise LoginError('登录失败，请核实账号密码重新登录')
         return self.sess
     
     def post(self):
@@ -34,23 +47,41 @@ class DaKa(object):
         return json.loads(res.text)
     
     def get_date(self):
+        """Get current date"""
         today = datetime.date.today()
         return "%4d%02d%02d" %(today.year, today.month, today.day)
         
     def get_info(self):
         """Get hitcard info, which is the old info with updated new time."""
-
         res = self.sess.get(self.base_url)
         html = res.content.decode()
         
-        old_info = json.loads(re.findall(r'oldInfo: ({[^}]+})', html)[0])
-        self.name = re.findall(r'realname: "([^\"]+)",', html)[0]
+        try:
+            old_info = json.loads(re.findall(r'oldInfo: ({[^\n]+})', html)[0])
+            new_info_tmp = json.loads(re.findall(r'def = ({[^\n]+})', html)[0])
+            new_id = new_info_tmp['id']
+            name = re.findall(r'realname: "([^\"]+)",', html)[0]
+            number = re.findall(r"number: '([^\']+)',", html)[0]
+        except IndexError as err:
+            raise RegexMatchError('Relative info not found in html with regex')
+        except json.decoder.JSONDecodeError as err:
+            raise DecodeError('JSON decode error')
 
         new_info = old_info.copy()
+        new_info['id'] = new_id
+        new_info['name'] = name
+        new_info['number'] = number
         new_info["date"] = self.get_date()
         new_info["created"] = round(time.time())
-        new_info["jrdqtlqk"] = []
-        new_info["jrdqjcqk"] = []
+        # form change
+        new_info['jrdqtlqk[]'] = 0
+        new_info['jrdqjcqk[]'] = 0
+        new_info['sfsqhzjkk'] = 1   # 是否申领杭州健康码
+        new_info['sqhzjkkys'] = 1   # 杭州健康吗颜色，1:绿色 2:红色 3:黄色
+        new_info['sfqrxxss'] = 1    # 是否确认信息属实
+        new_info['jcqzrq'] = ""
+        new_info['gwszdd'] = ""
+        new_info['szgjcs'] = ""
         self.info = new_info
         return new_info
 

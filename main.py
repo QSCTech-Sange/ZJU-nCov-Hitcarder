@@ -28,8 +28,8 @@ def doDaka(username, password,logger):
     spinner.start(text='正在获取个人信息...')
     logger.info('正在获取个人信息...')
     dk.get_info()
-    spinner.succeed('%s 同学, 你好~' %(dk.name))
-    logger.info('%s 同学, 你好~' %(dk.name))
+    spinner.succeed('%s %s同学, 你好~' %(dk.info['number'], dk.info['name']))
+    logger.info('%s %s同学, 你好~' %(dk.info['number'], dk.info['name']))
 
     spinner.start(text='正在为您打卡打卡打卡')
     logger.info('正在为您打卡打卡打卡')
