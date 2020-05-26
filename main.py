@@ -21,25 +21,41 @@ def doDaka(username, password,logger):
 
     spinner.start(text='登录到浙大统一身份认证平台...')
     logger.info('登录到浙大统一身份认证平台...')
-    dk.login()
-    spinner.succeed('已登录到浙大统一身份认证平台')
-    logger.info('已登录到浙大统一身份认证平台')
-
+    try:
+        dk.login()
+        spinner.succeed('已登录到浙大统一身份认证平台')
+        logger.info('已登录到浙大统一身份认证平台')
+    except Exception as err:
+        spinner.fail(str(err))
+        logger.info(str(err))
+        return
+    
     spinner.start(text='正在获取个人信息...')
     logger.info('正在获取个人信息...')
-    dk.get_info()
-    spinner.succeed('%s %s同学, 你好~' %(dk.info['number'], dk.info['name']))
-    logger.info('%s %s同学, 你好~' %(dk.info['number'], dk.info['name']))
-
+    try:
+        dk.get_info()
+        spinner.succeed('%s %s同学, 你好~' %(dk.info['number'], dk.info['name']))
+        logger.info('%s %s同学, 你好~' %(dk.info['number'], dk.info['name']))
+    except Exception as err:
+        spinner.fail('获取信息失败，请手动打卡，更多信息: ' + str(err))
+        logger.info('获取信息失败，请手动打卡，更多信息: ' + str(err))
+        return    
+    
     spinner.start(text='正在为您打卡打卡打卡')
     logger.info('正在为您打卡打卡打卡')
-    res = dk.post()
-    if str(res['e']) == '0':
-        spinner.stop_and_persist(symbol='🦄 '.encode('utf-8'), text='已为您打卡成功！')
-        logger.info('已为您打卡成功！')
-    else:
-        spinner.stop_and_persist(symbol='🦄 '.encode('utf-8'), text=res['m'])
-        logger.info(res['m'])
+    try:
+        res = dk.post()
+        if str(res['e']) == '0':
+            spinner.stop_and_persist(symbol='🦄 '.encode('utf-8'), text='已为您打卡成功！')
+            logger.info('已为您打卡成功！')
+        else:
+            spinner.stop_and_persist(symbol='🦄 '.encode('utf-8'), text=res['m'])
+            logger.info(res['m'])
+    except:
+        spinner.fail('数据提交失败')
+        logger.info('数据提交失败')
+        return 
+
 
 def main():
     # Create log

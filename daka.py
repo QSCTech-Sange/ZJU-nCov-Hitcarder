@@ -51,10 +51,11 @@ class DaKa(object):
         today = datetime.date.today()
         return "%4d%02d%02d" %(today.year, today.month, today.day)
         
-    def get_info(self):
+    def get_info(self, html=None):
         """Get hitcard info, which is the old info with updated new time."""
-        res = self.sess.get(self.base_url)
-        html = res.content.decode()
+        if not html:
+            res = self.sess.get(self.base_url)
+            html = res.content.decode()
         
         try:
             old_info = json.loads(re.findall(r'oldInfo: ({[^\n]+})', html)[0])
@@ -92,3 +93,17 @@ class DaKa(object):
         M_int = int(M_str, 16) 
         result_int = pow(password_int, e_int, M_int) 
         return hex(result_int)[2:].rjust(128, '0')
+    
+
+# Exceptions 
+class LoginError(Exception):
+    """Login Exception"""
+    pass
+
+class RegexMatchError(Exception):
+    """Regex Matching Exception"""
+    pass
+
+class DecodeError(Exception):
+    """JSON Decode Exception"""
+    pass
