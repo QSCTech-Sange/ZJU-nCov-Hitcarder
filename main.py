@@ -81,7 +81,7 @@ def main():
             users[i]["schedule"]["minute"] = input("\tminute: ") or 5
 
     # Schedule task
-    scheduler = BlockingScheduler()
+    scheduler = BlockingScheduler(timezone="Asia/Shanghai")
     for user in users:
         scheduler.add_job(doDaka, 'cron', args=[user["username"], user["password"],logger], hour=user["schedule"]["hour"], minute=user["schedule"]["minute"])
         print('⏰ 已启动定时程序，每天 %02d:%02d 为 %s 打卡' %(int(user["schedule"]["hour"]), int(user["schedule"]["minute"]),user["username"]))

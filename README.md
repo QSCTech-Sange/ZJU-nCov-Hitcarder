@@ -17,7 +17,7 @@
 
 1. clone 本项目（为了加快 clone 速度，可以指定 clone 深度`--depth 1`，只克隆最近一次 commit），并 cd 到本目录
     ```bash
-    $ git clone https://github.com/Tishacy/ZJU-nCov-Hitcarder.git --depth 1
+    $ git clone https://github.com/QSCTech-Sange/ZJU-nCov-Hitcarder.git --depth 1
     $ cd ZJU-nCov-Hitcarder
     ```
     
@@ -57,7 +57,8 @@
 
 - 第一次打卡需要人工打卡。
 - 为了防止电脑休眠或关机时程序不运行，推荐把这个部署到 VPS 上。
-- 可以使用指令 `python3 main.py&`　使其在后台运行。在根目录下会生成 `log.txt` 便于查看打卡状态。
+- 可以使用 `tmux` 或 `byobu` 多开终端让其在后台运行。
+- 在根目录下会生成 `log.txt` 便于查看打卡状态。
 - 测试程序是否正常运行：可以先把定的时间放在最近的一个时间（比如下一分钟）看下到时间是否可以正常打卡。
 
 
