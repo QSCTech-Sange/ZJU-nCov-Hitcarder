@@ -21,8 +21,8 @@ class Mail(object):
         subject = '今日打卡失败'
         message['Subject'] = Header(subject, 'utf-8')
         try:
-            smtpObj = smtplib.SMTP() 
-            smtpObj.connect(self.mail_host,25)    # 25 为 SMTP 端口号
+            smtpObj = smtplib.SMTP_SSL() 
+            smtpObj.connect(self.mail_host, 994)    # 994 为 SMTP SSL 端口号
             smtpObj.login(self.mail_user,self.mail_pass)
             smtpObj.sendmail(self.sender, self.receiver, message.as_string())  
         except smtplib.SMTPException as e:
